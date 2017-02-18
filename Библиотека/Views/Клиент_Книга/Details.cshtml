@@ -1,0 +1,42 @@
+﻿@model Библиотека.Клиент_Книга
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Клиент_Книга</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Дата_возврата)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Дата_возврата)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Клиенты.Фамилия)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Клиенты.Фамилия)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Книги.Название)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Книги.Название)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

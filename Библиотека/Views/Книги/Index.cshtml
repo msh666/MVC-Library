@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<Библиотека.Книги>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Список книг</h2>
+
+<p>
+    @Html.ActionLink("Добавить новую книгу", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Поиск: @Html.TextBox("SearchString")
+        <input type="submit" value="Найти" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Название", "Index", new { sortOrder = ViewBag.TitleSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Автор", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Год написания", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.DisplayName("Описание")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Название)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Автор)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Год_написания)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Описание)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.ID_Книга }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.ID_Книга }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.ID_Книга })
+            </td>
+        </tr>
+    }
+
+</table>
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

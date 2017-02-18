@@ -1,0 +1,47 @@
+﻿@model Библиотека.Клиент_Книга
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Возврат книги</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID_Выдачи)
+
+        @Html.HiddenFor(model => model.ID_Клиент)
+
+        @Html.HiddenFor(model => model.ID_Книга)
+
+        @Html.HiddenFor(model => model.Дата_выдачи)
+
+        <div class="form-group">
+            @Html.Label("Дата возврата", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Дата_возврата, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Дата_возврата, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Назад", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

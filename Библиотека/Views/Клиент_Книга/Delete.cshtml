@@ -1,0 +1,53 @@
+﻿@model Библиотека.Клиент_Книга
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Вы действительно хотите удалить запись о выданной книге?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Фамилия клиента")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Клиенты.Фамилия)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Название книги")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Книги.Название)
+        </dd>
+        
+        <dt>
+            @Html.DisplayName("Дата выдачи")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Дата_выдачи)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Дата возврата")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Дата_возврата)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Назад", "Index") |
+            <input type="submit" value="Удалить" class="btn btn-default"/> 
+        </div>
+    }
+</div>

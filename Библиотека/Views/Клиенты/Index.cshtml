@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<Библиотека.Клиенты>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Список клиентов";
+}
+
+<h2>Список клиентов</h2>
+
+<p>
+    @Html.ActionLink("Зарегистрировать нового клиента", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Поиск: @Html.TextBox("SearchString")
+        <input type="submit" value="Найти" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Фамилия", "Index", new { sortOrder = ViewBag.SurnameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Имя", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Отчество", "Index", new { sortOrder = ViewBag.PatrSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Дата рождения", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Фамилия)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Имя)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Отчество)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Дата_рождения)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id=item.ID_Клиент }) |
+                @Html.ActionLink("Выданные книги", "Details", new { id=item.ID_Клиент }) |
+                @Html.ActionLink("Удалить", "Delete", new { id=item.ID_Клиент })
+            </td>
+        </tr>
+    }
+
+</table>
+
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

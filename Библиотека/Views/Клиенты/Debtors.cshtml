@@ -1,0 +1,59 @@
+﻿@model PagedList.IPagedList<Библиотека.Клиент_Книга>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Debtors";
+}
+
+<h2>Список не возвращенных клиентом книг</h2>
+
+<p>
+    @Html.ActionLink("Назад", "Index")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Поиск: @Html.TextBox("SearchString")
+        <input type="submit" value="Найти" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Название книги", "Debtors", new { sortOrder = ViewBag.TitleSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Дата выдачи", "Debtors", new { sortOrder = ViewBag.DateStartSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Дата возврата", "Debtors", new { sortOrder = ViewBag.DateFinishSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Книги.Название)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Дата_выдачи)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Дата_возврата)
+            </td>
+            <td>
+                @Html.ActionLink("Возврат книги", "Edit", "Клиент_Книга", new { id = item.ID_Выдачи }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Debtors", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
